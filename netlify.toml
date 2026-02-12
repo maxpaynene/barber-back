@@ -1,9 +1,12 @@
 [build]
   command = "npm run build"
   publish = "dist"
-  functions = "netlify/functions" # Ahora apunta a la carpeta limpia
+
+[functions]
+  node_bundle = true
+  external_node_modules = ["@nestjs/microservices", "@nestjs/websockets", "cache-manager", "class-transformer"]
 
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/api" # Apunta al nuevo archivo api.js
+  to = "/.netlify/functions/lambda"
   status = 200
