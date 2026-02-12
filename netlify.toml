@@ -3,8 +3,15 @@
   publish = "dist"
 
 [functions]
+  # Aquí corregimos la jerarquía para que sea un objeto válido
   node_bundle = true
-  external_node_modules = ["@nestjs/microservices", "@nestjs/websockets", "cache-manager", "class-transformer"]
+  external_node_modules = [
+    "@nestjs/microservices", 
+    "@nestjs/websockets", 
+    "cache-manager", 
+    "class-transformer",
+    "class-validator"
+  ]
 
 [[redirects]]
   from = "/*"
