@@ -1,12 +1,9 @@
 [build]
   command = "npm run build"
   publish = "dist"
-
-[functions]
-  directory = "dist"
-  included_files = ["dist/**/*.js"] 
+  functions = "netlify/functions" # Ahora apunta a la carpeta limpia
 
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/lambda"
+  to = "/.netlify/functions/api" # Apunta al nuevo archivo api.js
   status = 200
