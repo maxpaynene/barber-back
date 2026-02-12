@@ -7,25 +7,25 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 
-@Entity('servicios')
+@Entity('services')
 export class Service {
   @PrimaryGeneratedColumn()
   id!: number;
 
   @Column()
-  nombre!: string;
+  name!: string;
 
   @Column({ type: 'text', nullable: true })
-  descripcion?: string;
+  description?: string;
 
   @Column({ type: 'int' })
-  precio!: number;
+  price!: number;
 
   @Column({ default: 30 })
-  duracion_minutos!: number;
+  duration_minutes!: number;
 
   @Column({ default: true })
-  activo!: boolean;
+  active!: boolean;
 
   @CreateDateColumn()
   created_at!: Date;

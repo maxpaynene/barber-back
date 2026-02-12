@@ -13,11 +13,11 @@ export class RolesService {
 
   async create(createRoleDto: CreateRoleDto) {
     const existing = await this.roleRepository.findOne({
-      where: { nombre: createRoleDto.nombre },
+      where: { name: createRoleDto.name as string },
     });
     if (existing) throw new ConflictException('El rol ya existe');
 
-    const newRole = this.roleRepository.create(createRoleDto);
+    const newRole = this.roleRepository.create({ name: createRoleDto.name as string });
     return await this.roleRepository.save(newRole);
   }
 
@@ -30,12 +30,12 @@ export class RolesService {
     if (!role) throw new NotFoundException(`Rol con ID ${id} no encontrado`);
 
     const existing = await this.roleRepository.findOne({
-      where: { nombre: updateRoleDto.nombre },
+      where: { name: updateRoleDto.name as string },
     });
 
     if (existing && existing.id !== id) throw new ConflictException('El rol ya existe');
 
-    role.nombre = updateRoleDto.nombre;
+    role.name = updateRoleDto.name as string;
     return await this.roleRepository.save(role);
   }
 

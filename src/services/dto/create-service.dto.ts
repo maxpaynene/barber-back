@@ -18,7 +18,7 @@ export class CreateServiceDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(100)
-  nombre!: string;
+  name!: string;
 
   @ApiPropertyOptional({
     description: 'Descripción del servicio',
@@ -28,7 +28,7 @@ export class CreateServiceDto {
   @IsString()
   @IsOptional()
   @MaxLength(500)
-  descripcion?: string;
+  description?: string;
 
   @ApiProperty({
     description: 'Precio del servicio en la moneda local',
@@ -38,7 +38,7 @@ export class CreateServiceDto {
   @IsNumber()
   @IsNotEmpty()
   @Min(0)
-  precio!: number;
+  price!: number;
 
   @ApiPropertyOptional({
     description: 'Duración estimada del servicio en minutos',
@@ -49,7 +49,7 @@ export class CreateServiceDto {
   @IsNumber()
   @IsOptional()
   @Min(1)
-  duracion_minutos?: number;
+  duration_minutes?: number;
 
   @ApiPropertyOptional({
     description: 'Estado del servicio (activo/inactivo)',
@@ -58,5 +58,5 @@ export class CreateServiceDto {
   })
   @IsBoolean()
   @IsOptional()
-  activo?: boolean;
+  active?: boolean;
 }

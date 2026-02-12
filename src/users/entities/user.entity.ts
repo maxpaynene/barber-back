@@ -1,3 +1,4 @@
+import { Role } from 'src/roles/entities/role.entity';
 import {
   Entity,
   Column,
@@ -5,9 +6,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 
-@Entity('usuarios')
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -22,16 +25,16 @@ export class User {
   password?: string | null;
 
   @Column({ type: 'varchar' })
-  nombre!: string;
+  name!: string;
 
   @Column({ type: 'varchar', nullable: true })
   avatar?: string | null;
 
-  @Column({ type: 'int', default: 3 })
+  @Column({ type: 'int', default: 1 })
   rol_id!: number;
 
   @Column({ default: true })
-  activo!: boolean;
+  active!: boolean;
 
   @CreateDateColumn()
   created_at!: Date;
@@ -41,4 +44,8 @@ export class User {
 
   @DeleteDateColumn()
   deleted_at!: Date;
+
+  @ManyToOne(() => Role)
+  @JoinColumn({ name: 'rol_id' })
+  rol: Role;
 }

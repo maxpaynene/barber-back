@@ -12,7 +12,7 @@ export class Role {
   id: number;
 
   @Column({ unique: true })
-  nombre: string;
+  name: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

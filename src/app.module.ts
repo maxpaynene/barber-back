@@ -7,6 +7,10 @@ import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 import { Role } from './roles/entities/role.entity';
 import { RolesModule } from './roles/roles.module';
+import { Barber } from './barbers/entities/barber.entity';
+import { BarbersModule } from './barbers/barbers.module';
+import { SchedulerBlock } from './scheduler-block/entities/scheduler-blocks.entity';
+import { SchedulerBlocksModule } from './scheduler-block/scheduler-blocks.module';
 
 @Module({
   imports: [
@@ -24,7 +28,7 @@ import { RolesModule } from './roles/roles.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Service, User, Role],
+        entities: [Service, User, Role, Barber, SchedulerBlock],
         synchronize: true,
         logging: true,
       }),
@@ -32,6 +36,8 @@ import { RolesModule } from './roles/roles.module';
     ServicesModule,
     UsersModule,
     RolesModule,
+    BarbersModule,
+    SchedulerBlocksModule,
   ],
 })
 export class AppModule {}

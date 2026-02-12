@@ -11,7 +11,7 @@ export class ServicesService {
   ) {}
 
   async findAllActive() {
-    return await this.serviceRepository.find({ where: { activo: true } });
+    return await this.serviceRepository.find({ where: { active: true } });
   }
 
   async create(data: Partial<ServiceEntity>) {

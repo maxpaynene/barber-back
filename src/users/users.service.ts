@@ -12,7 +12,7 @@ export class UsersService {
   ) {}
 
   async findAll() {
-    return await this.userRepository.find({ where: { activo: true } });
+    return await this.userRepository.find({ where: { active: true } });
   }
 
   async create(createUserDto: CreateUserDto) {
