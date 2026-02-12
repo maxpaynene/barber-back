@@ -1,7 +1,8 @@
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
 import { SchedulerBlocksService } from './scheduler-blocks.service';
 import { CreateSchedulerBlockDto } from './dto/create-scheduler-block.dto';
+import { UpdateSchedulerBlockDto } from './dto/update-scheduler-block.dto';
 
 @ApiTags('bloqueos-agenda')
 @Controller('schedule-blocks')
@@ -27,8 +28,9 @@ export class SchedulerBlocksController {
   }
 
   @Put(':id')
+  @ApiBody({ type: UpdateSchedulerBlockDto })
   @ApiOperation({ summary: 'Actualizar un bloqueo' })
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateDto: CreateSchedulerBlockDto) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateDto: UpdateSchedulerBlockDto) {
     return this.blocksService.update(id, updateDto);
   }
 }

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SchedulerBlock } from './entities/scheduler-blocks.entity';
 import { CreateSchedulerBlockDto } from './dto/create-scheduler-block.dto';
+import { UpdateSchedulerBlockDto } from './dto/update-scheduler-block.dto';
 
 @Injectable()
 export class SchedulerBlocksService {
@@ -44,7 +45,7 @@ export class SchedulerBlocksService {
     return await this.blockRepository.softDelete(id);
   }
 
-  async update(id: number, updateDto: CreateSchedulerBlockDto) {
+  async update(id: number, updateDto: UpdateSchedulerBlockDto) {
     const block = await this.blockRepository.findOneBy({ id });
     if (!block) throw new NotFoundException('Bloqueo no encontrado');
 

@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Param, Delete, Patch } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
 import { BarbersService } from './barbers.service';
 import { CreateBarberDto } from './dto/create-barber.dto';
+import { UpdateBarberDto } from './dto/update-barber.dto';
 
 @ApiTags('barbers')
 @Controller('barbers')
@@ -32,9 +33,10 @@ export class BarbersController {
     return this.barbersService.remove(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
+  @ApiBody({ type: UpdateBarberDto })
   @ApiOperation({ summary: 'Actualizar un barbero por ID' })
-  update(@Param('id') id: string, @Body() updateBarberDto: Partial<CreateBarberDto>) {
+  update(@Param('id') id: string, @Body() updateBarberDto: Partial<UpdateBarberDto>) {
     return this.barbersService.update(+id, updateBarberDto);
   }
 }

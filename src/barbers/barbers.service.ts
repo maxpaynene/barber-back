@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Barber } from './entities/barber.entity';
 import { User } from '../users/entities/user.entity';
 import { CreateBarberDto } from './dto/create-barber.dto';
+import { UpdateBarberDto } from './dto/update-barber.dto';
 
 @Injectable()
 export class BarbersService {
@@ -58,7 +59,7 @@ export class BarbersService {
     await this.barberRepository.save(barber);
   }
 
-  async update(id: number, updateBarberDto: Partial<CreateBarberDto>) {
+  async update(id: number, updateBarberDto: Partial<UpdateBarberDto>) {
     const barber = await this.barberRepository.findOneBy({ id });
     if (!barber) throw new NotFoundException('Barbero no encontrado');
 

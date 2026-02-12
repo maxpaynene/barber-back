@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Role } from './entities/role.entity';
 import { CreateRoleDto } from './dto/create-role.dto';
+import { UpdateRoleDto } from './dto/update-role.dto';
 
 @Injectable()
 export class RolesService {
@@ -25,7 +26,7 @@ export class RolesService {
     return await this.roleRepository.find();
   }
 
-  async update(id: number, updateRoleDto: CreateRoleDto) {
+  async update(id: number, updateRoleDto: UpdateRoleDto) {
     const role = await this.roleRepository.findOne({ where: { id } });
     if (!role) throw new NotFoundException(`Rol con ID ${id} no encontrado`);
 
