@@ -23,7 +23,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document, {
+  SwaggerModule.setup('api-docs', app, document, {
     swaggerOptions: {
       persistAuthorization: true,
     },
@@ -32,8 +32,8 @@ async function bootstrap() {
   });
 
   await app.listen(3000);
-  console.log(`Swagger is running on: ${await app.getUrl()}/api/docs`);
-  console.log(`Application is running on: ${await app.getUrl()}/api`);
+  console.log(`Swagger is running on: ${await app.getUrl()}/api-docs`);
+  console.log(`Application is running on: ${await app.getUrl()}/`);
 }
 
 void bootstrap();
