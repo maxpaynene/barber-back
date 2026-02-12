@@ -4,8 +4,8 @@ import { SchedulerBlocksService } from './scheduler-blocks.service';
 import { CreateSchedulerBlockDto } from './dto/create-scheduler-block.dto';
 import { UpdateSchedulerBlockDto } from './dto/update-scheduler-block.dto';
 
-@ApiTags('bloqueos-agenda')
-@Controller('schedule-blocks')
+@ApiTags('scheduler-block')
+@Controller('scheduler-blocks')
 export class SchedulerBlocksController {
   constructor(private readonly blocksService: SchedulerBlocksService) {}
 
