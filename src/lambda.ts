@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
@@ -7,21 +9,25 @@ import { Handler, Context, Callback } from 'aws-lambda';
 
 let cachedServer: Handler;
 
+// src/lambda.ts
 export const handler: Handler = async (event: any, context: Context, callback: Callback) => {
-  // Hack para asegurar que el evento parezca una petición API Gateway (lo que espera el adaptador)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  event.path = event.path || event.rawUrl;
+  // PARCHE CRÍTICO PARA NETLIFY
+  event.requestContext = event.requestContext || {};
+  event.requestContext.elb = event.requestContext.elb || {};
+  if (event.multiValueHeaders && !event.headers) {
+    event.headers = Object.keys(event.multiValueHeaders).reduce((headers, key) => {
+      headers[key] = event.multiValueHeaders[key].join(', ');
+      return headers;
+    }, {});
+  }
 
   if (!cachedServer) {
     const expressApp = express();
     const nestApp = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
-
     nestApp.enableCors();
     await nestApp.init();
-
     cachedServer = serverlessExpress({ app: expressApp });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return cachedServer(event, context, callback);
 };
