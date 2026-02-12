@@ -4,6 +4,23 @@
 
 [functions]
   directory = "netlify/functions"
+  external_node_modules = [
+    "class-transformer/storage",
+    "@nestjs/microservices",
+    "@nestjs/websockets",
+    "@grpc/grpc-js",
+    "@grpc/proto-loader",
+    "kafkajs",
+    "mqtt",
+    "amqplib",
+    "amqp-connection-manager",
+    "redis",
+    "ioredis",
+    "nats",
+    "cache-manager",
+    "class-validator",
+    "class-transformer"
+  ]
 
 [[redirects]]
   from = "/api-docs/*"
