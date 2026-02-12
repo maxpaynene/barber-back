@@ -26,7 +26,6 @@
     "@nestjs/core": "^11.0.1",
     "@nestjs/jwt": "^11.0.2",
     "@nestjs/mapped-types": "*",
-    "@nestjs/microservices": "^11.1.13",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/platform-socket.io": "^11.1.13",
@@ -75,7 +74,9 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.20.0"
+    "typescript-eslint": "^8.20.0",
+    "webpack": "^5.105.2",
+    "webpack-cli": "^6.0.1"
   },
   "jest": {
     "moduleFileExtensions": [
