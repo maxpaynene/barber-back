@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -14,7 +15,6 @@ async function bootstrapServer() {
     const expressApp = express();
     const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
 
-    // Configurar Swagger
     const config = new DocumentBuilder()
       .setTitle('Barberia API')
       .setDescription('API para gestión de barbería')
@@ -22,7 +22,7 @@ async function bootstrapServer() {
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api-docs', app, document);
+    SwaggerModule.setup('', app, document);
 
     await app.init();
     cachedServer = serverless(expressApp);
