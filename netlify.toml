@@ -6,6 +6,11 @@
   directory = "netlify/functions"
 
 [[redirects]]
+  from = "/api-docs/*"
+  to = "/.netlify/functions/swagger/:splat"
+  status = 200
+  
+[[redirects]]
   from = "/*"
   to = "/.netlify/functions/api"
   status = 200

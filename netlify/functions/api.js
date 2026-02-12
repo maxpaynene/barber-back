@@ -8,6 +8,6 @@ exports.handler = handler;
 exports.swagger = async (_event, _context) => {
   return {
     statusCode: 200,
-    body: JSON.stringify({ message: 'Swagger disponible en /api' }),
+    body: JSON.stringify({ message: 'Swagger disponible en /' }),
   };
 };
