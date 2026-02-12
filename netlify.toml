@@ -3,15 +3,26 @@
   publish = "dist"
 
 [functions]
+  directory = "netlify/functions"
   external_node_modules = [
-    "@nestjs/microservices", 
-    "@nestjs/websockets", 
-    "cache-manager", 
-    "class-transformer",
-    "class-validator"
+    "class-transformer/storage",
+    "@nestjs/microservices",
+    "@nestjs/websockets",
+    "@grpc/grpc-js",
+    "@grpc/proto-loader",
+    "kafkajs",
+    "mqtt",
+    "amqplib",
+    "amqp-connection-manager",
+    "redis",
+    "ioredis",
+    "nats",
+    "cache-manager",
+    "class-validator",
+    "class-transformer"
   ]
 
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/lambda"
+  to = "/.netlify/functions/api"
   status = 200
