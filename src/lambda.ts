@@ -1,17 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
-import serverlessExpress from '@vendia/serverless-express'; // o @codegenie/serverless-express
+import serverlessExpress from '@vendia/serverless-express';
 import express from 'express';
 import { Handler, Context, Callback } from 'aws-lambda';
 
 let cachedServer: Handler;
 
-// src/lambda.ts
 export const handler: Handler = async (event: any, context: Context, callback: Callback) => {
-  // PARCHE CRÍTICO PARA NETLIFY
   event.requestContext = event.requestContext || {};
   event.requestContext.elb = event.requestContext.elb || {};
   if (event.multiValueHeaders && !event.headers) {
