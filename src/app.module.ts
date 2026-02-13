@@ -13,6 +13,8 @@ import { SchedulerBlock } from './scheduler-block/entities/scheduler-blocks.enti
 import { SchedulerBlocksModule } from './scheduler-block/scheduler-blocks.module';
 import { SchedulerBarber } from './scheduler-barber/entities/scheduler-barber.entity';
 import { SchedulerBarberModule } from './scheduler-barber/scheduler-barber.module';
+import { SchedulerModule } from './scheduler/scheduler.module';
+import { Scheduler } from './scheduler/entities/scheduler.entity';
 
 @Module({
   imports: [
@@ -30,7 +32,7 @@ import { SchedulerBarberModule } from './scheduler-barber/scheduler-barber.modul
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Service, User, Role, Barber, SchedulerBlock, SchedulerBarber],
+        entities: [Service, User, Role, Barber, SchedulerBlock, SchedulerBarber, Scheduler],
         synchronize: true,
         logging: true,
       }),
@@ -41,6 +43,7 @@ import { SchedulerBarberModule } from './scheduler-barber/scheduler-barber.modul
     BarbersModule,
     SchedulerBlocksModule,
     SchedulerBarberModule,
+    SchedulerModule,
   ],
 })
 export class AppModule {}
