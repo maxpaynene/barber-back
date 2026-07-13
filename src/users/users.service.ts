@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
+import { ROLE } from '../common/roles.constants';
 
 @Injectable()
 export class UsersService {
@@ -12,7 +13,20 @@ export class UsersService {
   ) {}
 
   async findAll() {
-    return await this.userRepository.find({ where: { active: true } });
+    return await this.userRepository.find({
+      where: { active: true },
+      relations: ['rol'],
+      order: { name: 'ASC' },
+    });
+  }
+
+  async findOne(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id, active: true },
+      relations: ['rol'],
+    });
+    if (!user) throw new NotFoundException('Usuario no encontrado');
+    return user;
   }
 
   async create(createUserDto: CreateUserDto) {
@@ -42,7 +56,7 @@ export class UsersService {
       user = this.userRepository.create({
         google_id: googleData.googleId as string,
         email: googleData.email as string,
-        rol_id: 3,
+        rol_id: ROLE.CLIENT,
       });
       await this.userRepository.save(user);
     }
