@@ -15,12 +15,13 @@ import { SchedulerBarber } from './scheduler-barber/entities/scheduler-barber.en
 import { SchedulerBarberModule } from './scheduler-barber/scheduler-barber.module';
 import { SchedulerModule } from './scheduler/scheduler.module';
 import { Scheduler } from './scheduler/entities/scheduler.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
+      envFilePath: ['.env'],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -37,6 +38,7 @@ import { Scheduler } from './scheduler/entities/scheduler.entity';
         logging: true,
       }),
     }),
+    AuthModule,
     ServicesModule,
     UsersModule,
     RolesModule,
