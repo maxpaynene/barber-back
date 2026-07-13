@@ -28,11 +28,6 @@
   status = 200
 
 [[redirects]]
-  from = "/api/api-docs*"
-  to = "/.netlify/functions/api/api/api-docs:splat"
-  status = 200
-
-[[redirects]]
   from = "/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
