@@ -11,7 +11,20 @@ export class ServicesService {
   ) {}
 
   async findAllActive() {
-    return await this.serviceRepository.find({ where: { active: true } });
+    return await this.serviceRepository.find({
+      where: { active: true },
+      order: { name: 'ASC' },
+    });
+  }
+
+  async findAll() {
+    return await this.serviceRepository.find({ order: { name: 'ASC' } });
+  }
+
+  async findOne(id: number) {
+    const service = await this.serviceRepository.findOneBy({ id });
+    if (!service) throw new NotFoundException('Servicio no encontrado');
+    return service;
   }
 
   async create(data: Partial<ServiceEntity>) {

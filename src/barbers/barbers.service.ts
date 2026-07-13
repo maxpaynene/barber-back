@@ -5,6 +5,7 @@ import { Barber } from './entities/barber.entity';
 import { User } from '../users/entities/user.entity';
 import { CreateBarberDto } from './dto/create-barber.dto';
 import { UpdateBarberDto } from './dto/update-barber.dto';
+import { ROLE } from '../common/roles.constants';
 
 @Injectable()
 export class BarbersService {
@@ -27,8 +28,8 @@ export class BarbersService {
     // 3. Crear el barbero
     const newBarber = this.barberRepository.create(createBarberDto);
 
-    // 4. Actualizar el rol del usuario a 'barbero' (ID 2)
-    user.rol_id = 2;
+    // 4. Actualizar el rol del usuario a barbero
+    user.rol_id = ROLE.BARBER;
     await this.userRepository.save(user);
 
     return await this.barberRepository.save(newBarber);
@@ -71,14 +72,14 @@ export class BarbersService {
       const existingBarber = await this.barberRepository.findOneBy({ userId: newUser.id });
       if (existingBarber) throw new ConflictException('El nuevo usuario ya es un barbero');
 
-      // Actualizar el rol del nuevo usuario a 'barbero'
-      newUser.rol_id = 2;
+      // Actualizar el rol del nuevo usuario a barbero
+      newUser.rol_id = ROLE.BARBER;
       await this.userRepository.save(newUser);
 
-      // Opcional: Si quieres revertir el rol del usuario anterior a 'cliente' (ID 1)
+      // Opcional: Si quieres revertir el rol del usuario anterior a cliente
       const oldUser = await this.userRepository.findOneBy({ id: barber.userId });
       if (oldUser) {
-        oldUser.rol_id = 1;
+        oldUser.rol_id = ROLE.CLIENT;
         await this.userRepository.save(oldUser);
       }
     }

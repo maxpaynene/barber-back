@@ -32,6 +32,12 @@ export class SchedulerBlocksService {
     return await this.blockRepository.find({ order: { date_start: 'ASC' } });
   }
 
+  async findOne(id: number) {
+    const block = await this.blockRepository.findOneBy({ id });
+    if (!block) throw new NotFoundException('Bloqueo no encontrado');
+    return block;
+  }
+
   async findByBarber(barberId: number) {
     return await this.blockRepository.find({
       where: { barberId },
