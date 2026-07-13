@@ -23,16 +23,16 @@
   ]
 
 [[redirects]]
-  from = "/auth/google/callback"
-  to = "/.netlify/functions/api/auth/google/callback"
+  from = "/api/auth/google/callback*"
+  to = "/.netlify/functions/api/api/auth/google/callback:splat"
   status = 200
 
 [[redirects]]
-  from = "/api/api-docs"
-  to = "/.netlify/functions/api/api-docs"
+  from = "/api/api-docs*"
+  to = "/.netlify/functions/api/api/api-docs:splat"
   status = 200
 
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/api"
+  to = "/.netlify/functions/api/:splat"
   status = 200
