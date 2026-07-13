@@ -6,6 +6,7 @@ import {
   UseGuards,
   Request,
   UnauthorizedException,
+  ServiceUnavailableException,
   Headers,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -15,6 +16,7 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { GoogleStrategy } from './strategies/google.strategy';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -44,6 +46,11 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   @ApiOperation({ summary: 'Iniciar login con Google' })
   googleAuth() {
+    if (!GoogleStrategy.enabled) {
+      throw new ServiceUnavailableException(
+        'Login con Google (redirect) no está configurado en el servidor. Usa POST /auth/google con un ID token.',
+      );
+    }
     return;
   }
 
@@ -63,6 +70,9 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   @ApiOperation({ summary: 'Callback de Google OAuth' })
   async googleAuthRedirect(@Request() req: any) {
+    if (!GoogleStrategy.enabled) {
+      throw new ServiceUnavailableException('Google OAuth no configurado');
+    }
     return await this.authService.googleLogin(req.user);
   }
 

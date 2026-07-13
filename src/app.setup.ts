@@ -19,9 +19,7 @@ export const setupApp = async (app: INestApplication): Promise<void> => {
     }),
   );
 
-  app.setGlobalPrefix(GLOBAL_PREFIX, {
-    exclude: [`${GLOBAL_PREFIX}/${SWAGGER_PATH}`],
-  });
+  app.setGlobalPrefix(GLOBAL_PREFIX);
 
   const config = new DocumentBuilder()
     .setTitle('Barbería API')
@@ -37,5 +35,6 @@ export const setupApp = async (app: INestApplication): Promise<void> => {
       persistAuthorization: true,
     },
     customSiteTitle: 'Barbería Docs',
+    useGlobalPrefix: false,
   });
 };

@@ -30,6 +30,9 @@ export class User {
   @Column({ type: 'varchar', nullable: true })
   avatar?: string | null;
 
+  @Column({ type: 'varchar', nullable: true })
+  phone?: string | null;
+
   @Column({ type: 'int', default: 1 })
   rol_id!: number;
 
