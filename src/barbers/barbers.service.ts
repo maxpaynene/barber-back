@@ -3,9 +3,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Barber } from './entities/barber.entity';
 import { User } from '../users/entities/user.entity';
+import { SchedulerBarber } from '../scheduler-barber/entities/scheduler-barber.entity';
 import { CreateBarberDto } from './dto/create-barber.dto';
 import { UpdateBarberDto } from './dto/update-barber.dto';
 import { ROLE } from '../common/roles.constants';
+import { BarberDefaultScheduleService } from '../barber-default-schedule/barber-default-schedule.service';
+
+const FALLBACK_DEFAULT_SCHEDULE: Array<{ dayOfWeek: number; startTime: string; endTime: string; isActive: boolean }> = [
+  { dayOfWeek: 0, startTime: '10:00:00', endTime: '20:00:00', isActive: true },
+  { dayOfWeek: 1, startTime: '10:00:00', endTime: '20:00:00', isActive: true },
+  { dayOfWeek: 2, startTime: '10:00:00', endTime: '20:00:00', isActive: true },
+  { dayOfWeek: 3, startTime: '10:00:00', endTime: '20:00:00', isActive: true },
+  { dayOfWeek: 4, startTime: '10:00:00', endTime: '20:00:00', isActive: true },
+  { dayOfWeek: 5, startTime: '10:00:00', endTime: '20:00:00', isActive: true },
+  { dayOfWeek: 6, startTime: '10:00:00', endTime: '20:00:00', isActive: true },
+];
 
 @Injectable()
 export class BarbersService {
@@ -14,6 +26,9 @@ export class BarbersService {
     private barberRepository: Repository<Barber>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(SchedulerBarber)
+    private schedulerRepository: Repository<SchedulerBarber>,
+    private readonly defaultScheduleService: BarberDefaultScheduleService,
   ) {}
 
   async create(createBarberDto: CreateBarberDto) {
@@ -32,7 +47,35 @@ export class BarbersService {
     user.rol_id = ROLE.BARBER;
     await this.userRepository.save(user);
 
-    return await this.barberRepository.save(newBarber);
+    const savedBarber = await this.barberRepository.save(newBarber);
+
+    // 5. Clonar la pauta por defecto desde la BD (o el fallback si fallara)
+    const configured = await this.defaultScheduleService
+      .findAll()
+      .catch(() => FALLBACK_DEFAULT_SCHEDULE);
+
+    const defaultSchedules = configured
+      .filter((s) => s.isActive)
+      .map((s) =>
+        this.schedulerRepository.create({
+          barberId: savedBarber.id,
+          dayOfWeek: s.dayOfWeek,
+          startTime: s.startTime,
+          endTime: s.endTime,
+          isActive: true,
+        }),
+      );
+
+    if (defaultSchedules.length > 0) {
+      try {
+        await this.schedulerRepository.save(defaultSchedules);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('No se pudieron crear los horarios por defecto del barbero:', err);
+      }
+    }
+
+    return savedBarber;
   }
 
   async findAll() {
